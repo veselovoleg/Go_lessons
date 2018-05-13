@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+        .cards {
+            border: 1px solid red;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid blue;
+            padding: 5px;
+            width: 100%;
+        }
+        .card__id {
+            font-weight: bold;
+        }
+        .card__name {
+            font-style: italic;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="cards"> </div>
+        <script>
+
+function card({ id, name }) {
+    return `
+        <div class="card">
+            <div class="card__id">${id}</div>
+            <div class="card__name">${name}</div>
+        </div>
+    `;
+};
+
+const container = document.querySelector('.cards');
+window.container = container;
+fetch('/api/users.json')
+    .then(users => users.json())
+    .then(users => {
+        container.innerHTML = users.map(card).join('');
+    });
+        </script>
+        
+    </body>
+</html>
