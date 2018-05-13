@@ -1,0 +1,69 @@
+CREATE TABLE Orders (
+	rv    int
+	) INHERITS (content);
+
+CREATE TABLE content (
+	 status char(1),
+	 order_id int,
+	 store_is int,
+	 date_created date) 
+INHERITS (goods);
+
+
+CREATE TABLE goods (
+	Gid    int,
+	Price  numeric,  
+	Status char(1),
+	ChrtID int 
+);
+
+***
+type baseStruct struct {
+	Rv      int `json:"rv"`
+	Content []struct {
+		Goods []struct {
+			Gid    int    `json:"gid"`
+			Price  int    `json:"price"`
+			Status string `json:"status"`
+			ChrtID int    `json:"chrt_id"`
+		} `json:"goods"`
+		Status      string    `json:"status"`
+		OrderID     int       `json:"order_id"`
+		StoreID     int       `json:"store_id"`
+		DateCreated time.Time `json:"date_created"`
+	} `json:"content"`
+}
+***s
+
+CREATE TABLE orders (
+	rv    int,
+	orderId int
+);
+
+CREATE TABLE goods (
+	status char(1),
+	orderId int,
+	storeIs int,
+	dateCreated date
+);
+
+CREATE TABLE goodsInner (
+	gid    int,
+	price  numeric,  
+	status char(1),
+	chrtID int, 
+	orderId int
+);
+
+SELECT orderId
+FROM goods
+INNER JOIN goods ON goods.orderId= goodsInner.orderId; 
+
+
+SELECT goods.orderId, goodsInner.orderId, orders.orderId
+FROM ((goodsInner
+INNER JOIN goods ON goodsInner.orderId = goods.orderId)
+INNER JOIN orders ON goodsInner.orderId  = orders.orderId );
+
+
+

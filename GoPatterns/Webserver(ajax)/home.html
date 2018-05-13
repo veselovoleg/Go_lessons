@@ -1,0 +1,28 @@
+<head>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>
+ </head> 
+
+ <html>
+    <body>
+        <h1>Пример работы Golang Jquery AJAX</h1>
+                    <div id='result'><h3>До отправки запроса</h3></div><br><br>
+                <input id='ajax_btn' type='button' value='POST с AJAX на Golang сервер'>
+    </body>
+</html>
+
+<script>
+    $(document).ready(function () { 
+        $('#ajax_btn').click(function () {
+            $.ajax({
+                url: 'receive',
+                type: 'post',
+                dataType: 'html',
+                data : { ajax_post_data: 'Пёс!'},
+                success : function(data) {
+                    alert('ajax данные отосланы');
+                    $('#result').html(data);
+                },
+            });
+        });
+    });
+</script>
